@@ -1,0 +1,11 @@
+#idea releated
+.idea
+*.iml
+
+# build related
+target
+*.log
+*.log.*
+
+#mac book related
+.DS_Store

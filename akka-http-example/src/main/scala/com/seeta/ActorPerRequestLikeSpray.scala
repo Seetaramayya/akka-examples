@@ -14,7 +14,7 @@ object ActorPerRequestLikeSpray extends App {
   }
   class RequestHandler extends Actor {
     import RequestHandler._
-    def receive = {
+    def receive: Receive = {
       case Handle(ctx) =>
         ctx.complete("ok")
         context.stop(self)

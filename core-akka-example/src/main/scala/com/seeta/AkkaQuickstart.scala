@@ -22,7 +22,7 @@ class Greeter(message: String, printerActor: ActorRef) extends Actor {
 
   var greeting = ""
 
-  def receive = {
+  def receive: Receive = {
     case WhoToGreet(who) =>
       greeting = message + ", " + who
     case Greet           =>
@@ -48,9 +48,8 @@ object Printer {
 class Printer extends Actor with ActorLogging {
   import Printer._
 
-  def receive = {
-    case Greeting(greeting) =>
-      log.info("Greeting received (from " + sender() + "): " + greeting)
+  def receive: Receive = {
+    case Greeting(greeting) => log.info("Greeting received (from " + sender() + "): " + greeting)
   }
 }
 //#printer-actor
@@ -64,15 +63,12 @@ object AkkaQuickstart extends App {
 
   //#create-actors
   // Create the printer actor
-  val printer: ActorRef = system.actorOf(Printer.props, "printerActor")
+  val printer: ActorRef = system.actorOf(Printer.props, "printer-actor")
 
   // Create the 'greeter' actors
-  val howdyGreeter: ActorRef =
-    system.actorOf(Greeter.props("Howdy", printer), "howdyGreeter")
-  val helloGreeter: ActorRef =
-    system.actorOf(Greeter.props("Hello", printer), "helloGreeter")
-  val goodDayGreeter: ActorRef =
-    system.actorOf(Greeter.props("Good day", printer), "goodDayGreeter")
+  val howdyGreeter: ActorRef = system.actorOf(Greeter.props("Howdy", printer), "howdy-greeter")
+  val helloGreeter: ActorRef = system.actorOf(Greeter.props("Hello", printer), "helloGreeter")
+  val goodDayGreeter: ActorRef = system.actorOf(Greeter.props("Good day", printer), "goodDayGreeter")
   //#create-actors
 
   //#main-send-messages
